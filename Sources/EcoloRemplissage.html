@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ecolo Binet : Remplissage</title>
+        <style type="text/css">
+            .Champ {
+                color: blue;
+                float: left;
+                width: 150px;
+            }
+
+            .Input {
+                margin-left: 20px;
+            }
+
+            .Progress {
+                border: 1px solid black;
+                width: 400px;
+                height: 30px;
+            }
+
+            .Bar {
+                width: 1%;
+                height: 30px;
+                background-color: black;
+            }
+
+            .Cadre {
+                padding: 10px;
+                border: 1px solid black;
+                width: 350px;
+            }
+
+            p {
+                float: left;
+            }
+
+            #Pourcentage {
+                display: block;
+            }
+
+            #Cent {
+                padding-left: 350px;
+            }
+        </style>
+        <script language="javascript">
+            function ProgressBar() {
+                var Pourcentage = document.querySelector('#Pourcentage');
+                alert('Bienvenue');
+                Pourcentage.style.display = "none";
+
+            }
+        </script>
+    </head>
+    <body onload="ProgressBar()" ;>
+    <div class="Cadre">
+        <div class="Champ">T° Actuel du bain</div>
+        <input class="Input" type="text" disabled="disabled">
+        <br/><br/>
+        <div class="Champ">T° Ambiante</div>
+        <input class="Input" type="text" disabled="disabled">
+        <br/><br/>
+        <div class="Champ">Temps écoulé</div>
+        <input class="Input" type="text" disabled="disabled">
+        <br/><br/>
+        <div class="Champ">Temps restant</div>
+        <input class="Input" type="text" disabled="disabled">
+    </div>
+    <br/><br/>
+    <div>Progression :</div>
+    <br/><br/>
+
+    <div class="ContainerProgress">
+        <div class="Progress">
+            <div class="Bar">
+            </div>
+        </div>
+        <p>0%</p>
+        <p id="Pourcentage">x%</p>
+        <p id="Cent">100%</p>
+    </div>
+    </body>
+</html>
