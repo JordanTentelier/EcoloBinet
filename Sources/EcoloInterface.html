@@ -12,7 +12,7 @@
 
 				$(".erreur").hide();
 
-				$("#type").on('click', function(){
+				$("#QttEauType").on('click', function(){
 
 					if(this.value == '%') {
 						this.value = 'L';
@@ -32,17 +32,29 @@
 						Eau = Eau.substring(0,Eau.length-1);
 						this.value = Eau;
 					}
-					if(this.value > 100 && $("#type")[0].value == '%'){
+					if(this.value > 100 && $("#QttEauType")[0].value == '%'){
 						$('#QttEauErreur').show();
 					} else {
 						$('#QttEauErreur').hide();
 					}
 				})
 
+				$("#typeTemp").on('click', function(){
+					if(this.value == '°C') {
+						this.value = '°F'
+						// TODO 
+						// ACTUALISER LA VALEUR DE #Temperature
+					} else {
+						this.value = '°C';
+						// ACTUALISER LA VALEUR DE #Temperature
+					}
+				});
+
 			});
 
 		</script>
 
+		<!-- CSS -->
 		<style type="text/css">
 			.sous_titre {
 				font-size : 16px;
@@ -87,7 +99,56 @@
 				width:90%;
 			}
 
+			label {
+				margin:auto;
+				font-size: 10px;
+			}
+
+			/* @media Query */
+			@media (max-width: 500px) {
+				.container {
+					width:100% !important;
+				}
+
+				h4 {
+					text-align:center;
+				}
+
+				.sous_titre {
+					margin :0px;
+					width:100%;
+					text-align:center;
+				}
+
+				.inputText {
+					width:80%;
+				
+				}
+
+				.sous_sous_titre {
+					margin :0px;
+					width:100%;
+					text-align:center;
+				}
+
+				.bigButton {
+					width:90%;
+					margin-bottom: 5px;
+				}
+
+				.divInput {
+					width:100%;
+					text-align:center;
+				}
+
+				#divSousSousTitre {
+					width:80%;
+					margin:auto !important;
+				}
+
+			}
 		</style>
+
 	</head>
 
 	<body>
@@ -97,27 +158,39 @@
 			<h4> Paramètres : </h4>
 
 			<div class="row">
-				<div class="sous_titre"> Capacité de la baignoire : </div> 
-				<input type="text"/>
+				<div class="sous_titre"> Capacité de la baignoire :</div> 
+				<div class="divInput">
+					<input type="text" class="inputText"/>
+					<input type="button" value="L" disabled="disabled" />
+				</div>
 			</div>
 
 			<div class="row">
-				<div style="margin-left: 50px">
-					Surface : 
-
+			<div class="sous_titre"> Surface : </div>
+				<div id="divSousSousTitre" style="margin-left: 50px">
+				 
 					<div class="row">
-						<div class="sous_sous_titre"> Longueur intérieur : </div>
-						<input type="text"/>
+						<div class="sous_sous_titre"> * Longueur intérieur : </div>
+						<div class="divInput">
+							<input type="text" class="inputText" />
+							<input type="button" value="cm" disabled="disabled" />
+						</div>
 					</div>
 
 					<div class="row">
-						<div class="sous_sous_titre"> Largeur intérieur : </div>
-						<input type="text"/>
+						<div class="sous_sous_titre"> * Largeur intérieur : </div>
+						<div class="divInput">
+							<input type="text" class="inputText"/>
+							<input type="button" value="cm" disabled="disabled" />
+						</div>
 					</div>
 
 					<div class="row">
-						<div class="sous_sous_titre"> Hauteur intérieur : </div>
-						<input type="text"/>
+						<div class="sous_sous_titre"> * Hauteur intérieur : </div>
+						<div class="divInput">
+							<input type="text" class="inputText"/>
+							<input type="button" value="cm" disabled="disabled" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -127,19 +200,27 @@
 		
 
 			<div class="row">
-				<div class="sous_titre"> Température : </div>
-				<input type="text"/>
+				<div class="sous_titre"> * Température : </div>
+				<div class="divInput">
+					<input type="text" class="inputText" id="Temperature" />
+					<input type="button" value="°C" class="btn-primary" id="typeTemp"/>
+				</div>
 			</div>
 
 			<div class="row">
 				<div class="sous_titre"> T° Ambiante : </div>
-				<input type="text" disabled="disabled"/>
+				<div class="divInput">
+					<input type="text" class="inputText" id="TempAmbiante"/>
+					<input type="button" value="°C" disabled="disabled" />
+				</div>
 			</div>
 
 			<div class="row">
-				<div class="sous_titre"> Quantité d'eau :</div>
-				<input type="text" id="QttEau"/>
-				<input type="button" value="%" class="btn-primary" id="type"/>
+				<div class="sous_titre"> ** Quantité d'eau :</div>
+				<div class="divInput">
+					<input type="text" class="inputText" id="QttEau"/>
+					<input type="button" value="%" class="btn-primary" id="QttEauType"/>
+				</div>
 				<div class="alert alert-danger erreur" id="QttEauErreur">
   					<strong>Erreur :</strong> veuillez entrer un nombre inférieur à 100
 				</div>
@@ -150,6 +231,12 @@
 				<input type="button" value="Nettoyage" class="btn btn-primary bigButton"/>
 			</div>
 
+			<div class="row">
+				<label> * : champ obligatoire pour remplissage </label>
+			</div>
+			<div class="row">
+				<label> ** : champ obligatoire pour les deux options </label>
+			</div>
 		</div>
 	
 	</body>
