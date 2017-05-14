@@ -39,6 +39,31 @@
 					}
 				})
 
+				$("input").on('click', function() {
+					if(this.value == "Connexion"){
+						$.ajax({
+							url : 'Server.php',
+							type : 'POST',
+							data : {
+								action : 'aa',
+								login : $("#login").val(),
+								pwd : $("#pwd").val()
+							}, 
+							
+							dataType : 'json',
+							success : function (data) {
+								console.log(data);
+							},
+
+							error : function (data) {
+
+							}
+						});
+					}
+
+				
+				})
+
 			});
 
 		</script>
@@ -114,9 +139,10 @@
 			</div>
 
 			<div class="row" style="margin-top:20px">
-				<input type="button" class="btn btn-primary bigButton" value="Connexion"/>
+				<input type="submit" class="btn btn-primary bigButton" value="Connexion"/>
 				<input type="button" class="btn btn-primary bigButton" value="Inscription"/>
 			</div>
+			
 		</div>
 	</body>
 	
