@@ -3,6 +3,8 @@
 	if(!isset($_SESSION["connecte"]))
 		header('Location:Homepage.php');
 	$file = fopen("temp.txt","r");
+	$temp = fgets($file);
+	fclose($file);
 ?>
 
 <!DOCTYPE html>
@@ -240,7 +242,7 @@
 			<div class="row">
 				<div class="sous_titre"> T° Ambiante : </div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="TempAmbiante" disabled="disabled" value="<?php echo fgets($file);?>"/>
+					<input type="text" class="inputText" id="TempAmbiante" disabled="disabled" value="<?php echo $temp?>"/>
 					<input type="button" value="°C" disabled="disabled" />
 				</div>
 			</div>
@@ -275,5 +277,5 @@
 
 	</body>
 
-<?php fclose($file); ?>
+
 </html>
