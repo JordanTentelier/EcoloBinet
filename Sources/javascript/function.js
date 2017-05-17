@@ -40,12 +40,12 @@ function deconnexion(){
 				if(data.feedback == "Deconnection"){
 					document.location.href="Homepage.php";
 				} else {
-
+					alert('error1');
 				}
 			},
 			error:function(data)
 			{
-				
+				alert('error2');
 			},
 		});
 }

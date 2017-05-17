@@ -2,7 +2,7 @@
 	session_start();
 	if(!isset($_SESSION["connecte"]))
 		header('Location:Homepage.php');
-
+	$file = fopen("temp.txt","r");
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="javascript/jquery-3.2.1"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap"></script>
 		<script type="text/javascript" src="javascript/function.js"></script>
+
 		<script type="text/javascript">
 			$(document).ready(function(){
 
@@ -50,7 +51,7 @@
 				$("#typeTemp").on('click', function(){
 					if(this.value == '°C') {
 						this.value = '°F'
-						// TODO 
+						// TODO
 						// ACTUALISER LA VALEUR DE #Temperature
 					} else {
 						this.value = '°C';
@@ -58,9 +59,24 @@
 					}
 				});
 
+				$("#ButtonSurfCapa").on('click',function(){
+					if(this.value == 'Surface')
+					{
+						$('#Capacite').hide();
+						$('#Surface').show();
+						this.value = 'Capacite'
+					}
+					else
+					{
+						$('#Surface').hide();
+						$('#Capacite').show();
+						this.value = 'Surface'
+					}
+				});
+
 				$("#deconnexion").on('click', function(){
 					deconnexion();
-				})
+				});
 
 			});
 
@@ -104,10 +120,10 @@
 			.erreur {
 				text-align:center;
 				margin-bottom:0px;
-				margin-top:5px; 
-				padding:0px; 
+				margin-top:5px;
+				padding:0px;
 				margin-left:auto;
-				margin-right:auto; 
+				margin-right:auto;
 				width:90%;
 			}
 
@@ -115,7 +131,6 @@
 				margin:auto;
 				font-size: 10px;
 			}
-
 			/* @media Query */
 			@media (max-width: 500px) {
 				.container {
@@ -134,7 +149,7 @@
 
 				.inputText {
 					width:80%;
-				
+
 				}
 
 				.sous_sous_titre {
@@ -171,19 +186,19 @@
 
 
 			<h4> Paramètres : </h4>
-
-			<div class="row">
-				<div class="sous_titre"> Capacité de la baignoire :</div> 
+			<input class="btn btn-primary" id="ButtonSurfCapa" type="button" value="Surface">
+			<div class="row" id="Capacite">
+				<div class="sous_titre"> Capacité de la baignoire :</div>
 				<div class="divInput">
 					<input type="text" class="inputText"/>
 					<input type="button" value="L" disabled="disabled" />
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row" id="Surface" style="display:none;">
 			<div class="sous_titre"> Surface : </div>
 				<div id="divSousSousTitre" style="margin-left: 50px">
-				 
+
 					<div class="row">
 						<div class="sous_sous_titre"> * Longueur intérieur : </div>
 						<div class="divInput">
@@ -210,9 +225,9 @@
 				</div>
 			</div>
 
-		
+
 			<h4> Bain : </h4>
-		
+
 
 			<div class="row">
 				<div class="sous_titre"> * Température : </div>
@@ -225,7 +240,7 @@
 			<div class="row">
 				<div class="sous_titre"> T° Ambiante : </div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="TempAmbiante" disabled="disabled"/>
+					<input type="text" class="inputText" id="TempAmbiante" disabled="disabled" value="<?php echo fgets($file);?>"/>
 					<input type="button" value="°C" disabled="disabled" />
 				</div>
 			</div>
@@ -257,7 +272,8 @@
 				<label class="info"> ** : champ obligatoire pour les deux options </label>
 			</div>
 		</div>
-	
+
 	</body>
-	
+
+<?php fclose($file); ?>
 </html>
