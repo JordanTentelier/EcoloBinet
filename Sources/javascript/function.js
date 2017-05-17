@@ -11,7 +11,7 @@ function connexion(login,pwd){
 			success: function(data)
 			{
 				if(data.feedback == "ok"){
-					document.location.href="EcoloInterface.phtml";
+					//document.location.href="EcoloInterface.phtml";
 					
 				} else {
 					$("#connexionErreur").css("display","block");
