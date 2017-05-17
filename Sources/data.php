@@ -31,22 +31,28 @@ session_start();
 		else {
 			switch($data["action"]){
 				case "connexion" :
-				$login = valider("login");
-				$pwd = valider('pwd');
+					$login = valider("login");
+					$pwd = valider('pwd');
 
-				if 	( !($login) || !($pwd) ){
-					$data["feedback1"] = "Inconnu";
-				}
+					if 	( !($login) || !($pwd) ){
+						$data["feedback1"] = "Inconnu";
+					}
 
-				$pass = "[$^";
-				$pass .= $pwd;
-				$pass .= "#m%ù";
-				$pwd = sha1($pass);
+					$pass = "[$^";
+					$pass .= $pwd;
+					$pass .= "#m%ù";
+					$pwd = sha1($pass);
 
-				$data['pwd'] = $pwd;
-				if(!($data["connecte"] = verifUser($login,$pwd))){
-					$data["feedback"] = "Connexion impossible";
-				} 
+					$data['pwd'] = $pwd;
+					if(!($data["connecte"] = verifUser($login,$pwd))){
+						$data["feedback"] = "Connexion impossible";
+					} 
+				break;
+
+				case "deconnexion" :
+					session_destroy();
+					$data["feedback"] = "Deconnection";
+				break;
 			}
 		}
 		

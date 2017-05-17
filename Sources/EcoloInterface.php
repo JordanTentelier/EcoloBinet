@@ -14,6 +14,7 @@
 		<script type="text/javascript" src="javascript/tether-1.3.3/dist/js/tether"></script>
 		<script type="text/javascript" src="javascript/jquery-3.2.1"></script>
 		<script type="text/javascript" src="bootstrap/js/bootstrap"></script>
+		<script type="text/javascript" src="javascript/function.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 
@@ -56,6 +57,10 @@
 						// ACTUALISER LA VALEUR DE #Temperature
 					}
 				});
+
+				$("#deconnexion").on('click', function(){
+					deconnexion();
+				})
 
 			});
 
@@ -220,7 +225,7 @@
 			<div class="row">
 				<div class="sous_titre"> T° Ambiante : </div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="TempAmbiante"/>
+					<input type="text" class="inputText" id="TempAmbiante" disabled="disabled"/>
 					<input type="button" value="°C" disabled="disabled" />
 				</div>
 			</div>
@@ -239,6 +244,10 @@
 			<div class="row" style="margin-top: 25px;">
 				<input type="button" value="Remplissage" class="btn btn-primary bigButton"/>
 				<input type="button" value="Nettoyage" class="btn btn-primary bigButton"/>
+			</div>
+
+			<div class="row" style="margin-top:25px;">
+				<input type="button" value="Deconnexion" class="btn btn-primary bigButton" style="width:150px;" id="deconnexion"/>
 			</div>
 
 			<div class="row">

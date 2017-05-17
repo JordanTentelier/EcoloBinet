@@ -24,3 +24,28 @@ function connexion(login,pwd){
 			},
 		});
 };		
+
+function deconnexion(){
+	$.ajax({
+			url : 'data.php',
+			dataType : "json",
+			data : {
+					"action":"deconnexion",
+					"login": "<?php $_SESSION['Login'] ?>",
+					"pwd" : "<?php $_SESSION['Password'] ?>",
+					},
+			type : 'post',
+			success: function(data)
+			{
+				if(data.feedback == "Deconnection"){
+					document.location.href="Homepage.php";
+				} else {
+
+				}
+			},
+			error:function(data)
+			{
+				
+			},
+		});
+}

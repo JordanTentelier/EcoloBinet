@@ -6,40 +6,41 @@ include_once "maLibForms.php";
 
 /**
  * @file login.php
- * Fichier contenant des fonctions de vï¿½rification de logins
+ * Fichier contenant des fonctions de vérification de logins
  */
 
 /**
- * Cette fonction vï¿½rifie si le login/passe passï¿½s en paramï¿½tre sont lï¿½gaux
- * Elle stocke le pseudo de la personne dans des variables de session : session_start doit avoir ï¿½tï¿½ appelï¿½...
+ * Cette fonction vérifie si le login/passe passés en paramètre sont légaux
+ * Elle stocke le pseudo de la personne dans des variables de session : session_start doit avoir été appelé...
  * Elle enregistre aussi une information permettant de savoir si l'utilisateur qui se connecte est administrateur ou non
- * Elle enregistre l'ï¿½tat de la connexion dans une variable de session "connecte" = true
- * @pre login et passe ne doivent pas ï¿½tre vides
+ * Elle enregistre l'état de la connexion dans une variable de session "connecte" = true
+ * @pre login et passe ne doivent pas être vides
  * @param string $login
  * @param string $password
- * @return false ou true ; un effet de bord est la crï¿½ation de variables de session
+ * @return false ou true ; un effet de bord est la création de variables de session
  */
 
 function verifUser($login,$pwd)
 {
-$sql="SELECT * from users WHERE Login='$login' AND Password='$pwd' AND Blacklist = 0"; // on recup la base de donnï¿½ dans la var sql
+$sql="SELECT * from users WHERE Login='$login' AND Password='$pwd' AND Blacklist = 0"; // on recup la base de donné dans la var sql
 $resource = SQLSelect($sql);
-$tabData = parcoursRS($resource); // tabData , tableau des rï¿½ponses de resource
+$tabData = parcoursRS($resource); // tabData , tableau des réponses de resource
 if($resource) // si resultat dans la recherche du login
 	{
-		$_SESSION["Login"]=$login; // La session ouverte prend pour pseudo le login 
-		$_SESSION["IdUser"]=$tabData[0]['Id'];
-		$_SESSION["connecte"]=true;
+		$_SESSION["Login"]= $login; // La session ouverte prend pour pseudo le login 
+		$_SESSION["Password"] = $pwd;
+		$_SESSION["IdUser"] = $tabData[0]['Id'];
+		$_SESSION["connecte"] = true;
 		return true;
 	}
 return false;
 }
 
 /**
- * Fonction ï¿½ placer au dï¿½but de chaque page privï¿½e
+ * Fonction à placer au début de chaque page privée
  * Cette fonction redirige vers la page $urlBad en envoyant un message d'erreur 
-	et arrï¿½te l'interprï¿½tation si l'utilisateur n'est pas connectï¿½
- * Elle ne fait rien si l'utilisateur est connectï¿½, et si $urlGood est faux
+	et arrête l'interprétation si l'utilisateur n'est pas connecté
+ * Elle ne fait rien si l'utilisateur est connecté, et si $urlGood est faux
  * Elle redirige vers urlGood sinon
  */
 function securiser($urlBad,$urlGood=false)
