@@ -49,3 +49,27 @@ function deconnexion(){
 			},
 		});
 }
+
+function remplir(capa,temp,quantite){
+	$.ajax({
+		url : 'data.php',
+		dataType : "json",
+		data : {
+			"action":"remplir",
+			//Ajouter les params.....
+		},
+		type : 'post',
+		success: function(data)
+		{
+			if(data.feedback == "Remplir OK"){
+				document.location.href="EcoloRemplissage.php";
+			} else {
+				alert('error1');
+			}
+		},
+		error:function(data)
+		{
+			alert('error2');
+		},
+	});
+}

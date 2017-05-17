@@ -80,6 +80,10 @@
 					deconnexion();
 				});
 
+				$("#Remplissage").on('click', function(){
+					remplir();
+				});
+
 			});
 
 		</script>
@@ -190,7 +194,7 @@
 			<h4> Paramètres : </h4>
 			<input class="btn btn-primary" id="ButtonSurfCapa" type="button" value="Surface">
 			<div class="row" id="Capacite">
-				<div class="sous_titre"> Capacité de la baignoire :</div>
+				<div class="sous_titre"> * Capacité de la baignoire :</div>
 				<div class="divInput">
 					<input type="text" class="inputText"/>
 					<input type="button" value="L" disabled="disabled" />
@@ -259,8 +263,8 @@
 			</div>
 
 			<div class="row" style="margin-top: 25px;">
-				<input type="button" value="Remplissage" class="btn btn-primary bigButton"/>
-				<input type="button" value="Nettoyage" class="btn btn-primary bigButton"/>
+				<input type="button" value="Remplissage" class="btn btn-primary bigButton" id="Remplissage"/>
+				<input type="button" value="Nettoyage" class="btn btn-primary bigButton" id="Nettoyage"/>
 			</div>
 
 			<div class="row" style="margin-top:25px;">
