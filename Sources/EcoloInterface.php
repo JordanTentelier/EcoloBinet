@@ -84,7 +84,24 @@
 				});
 
 				$("#Remplissage").on('click', function(){
-					remplir();
+					var temp = $("#Temperature")[0].value;
+					var qtteau = $("#QttEau")[0].value;
+
+					if($("#QttEauType")[0].value == '%') {
+						if(qtteau > 100)
+							return;
+						if($("#typeTemp")[0].value == '°C')
+							remplir(temp,(qtteau/100)*$("#capacitebaignoire")[0].value);
+						else
+							remplir((temp -32)*(5/9),(qtteau/100)*$("#capacitebaignoire")[0].value);
+					} else {
+						if($("#QttEau")[0].value > $("#capacitebaignoire")[0].value)
+							return;
+						if($("#typeTemp")[0].value == '°C')
+							remplir(temp,qtteau);
+						else
+							remplir((temp -32)*(5/9),qtteau);
+					}
 				});
 
 			});

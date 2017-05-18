@@ -50,16 +50,14 @@ function deconnexion(){
 		});
 }
 
-function remplir(capa,temp,quantite){
+function remplir(temp,quantite){
 	$.ajax({
 		url : 'data.php',
 		dataType : "json",
 		data : {
 			"action":"remplir",
-			"login": "<?php $_SESSION['Login'] ?>",
-			"capacite": "<?php $_SESSION['capa'] ?>",
-			"pwd" : "<?php $_SESSION['temp'] ?>",
-			"login": "<?php $_SESSION['pourcentage'] ?>",
+			"temp": temp,
+			"quantite": quantite,
 		},
 		type : 'post',
 		success: function(data)

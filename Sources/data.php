@@ -56,6 +56,10 @@ session_start();
 
 				case "remplir" :
 
+                    $temp = valider("temp");
+                    $quantite = valider('quantite');
+                    $_SESSION["temp"]= $temp;
+                    $_SESSION["quantite"] = $quantite;
                     $data["feedback"] = "Remplir OK";
 				break;
 			}

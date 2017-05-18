@@ -2,7 +2,7 @@
     session_start();
     if(!isset($_SESSION["connecte"]))
         header('Location:Homepage.php');
-
+    var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +136,10 @@
                     <div class="sous_titre">T° Actuel du bain :</div>
                     <input type="text" class="inputText" disabled="disabled">
                 </div>
-
+                <div class="row">
+                    <div class="sous_titre">T° Demandé :</div>
+                    <input type="text" class="inputText" disabled="disabled" value="<?php echo $_SESSION["temp"];?> °C">
+                </div>
                 <div class="row">
                     <div class="sous_titre">T° Ambiante :</div>
                     <input type="text" class="inputText" disabled="disabled">
