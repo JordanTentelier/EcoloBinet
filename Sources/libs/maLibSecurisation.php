@@ -38,10 +38,12 @@ if($resource) // si resultat dans la recherche du login
 		$sql="SELECT * from parametres WHERE id_user='$id'"; // on recup la base de donn� dans la var sql
 		$resource = SQLSelect($sql);
 		$tabData = parcoursRS($resource);
-
-		$_SESSION["capa"] = $tabData[0]['capacite'];
-		$_SESSION["temp"] = $tabData[0]['temperature'];
-		$_SESSION["pourcentage"] = $tabData[0]['pourcentage'];
+        if($resource)
+        {
+            $_SESSION["capa"] = $tabData[0]['capacite'];
+            $_SESSION["temp"] = $tabData[0]['temperature'];
+            $_SESSION["pourcentage"] = $tabData[0]['pourcentage'];
+        }
 		return true;
 	}
 return false;

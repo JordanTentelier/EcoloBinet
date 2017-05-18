@@ -27,12 +27,12 @@
 
 					if(this.value == '%') {
 						this.value = 'L';
-						document.getElementById('QttEau').value =((document.getElementById('QttEau').value)/100)*document.getElementById('capacitebaignoire').value;
+
+						$("#QttEau")[0].value =(($("#QttEau")[0].value)/100)*$("#capacitebaignoire")[0].value;
 						$('#QttEauErreur').hide();
 					} else {
 						this.value = '%';
-						document.getElementById('QttEau').value = ((document.getElementById('QttEau').value)/document.getElementById('capacitebaignoire').value)*100;
-
+						$("#QttEau")[0].value = (($("#QttEau")[0].value)/$("#capacitebaignoire")[0].value)*100;
 					}
 
 					if(this.value == '%' && $("#QttEau")[0].value > 100){
@@ -51,16 +51,16 @@
 					} else {
 						$('#QttEauErreur').hide();
 					}
-				})
+				});
 
 				$("#typeTemp").on('click', function(){
 					if(this.value == '°C') {
 						this.value = '°F'
-						document.getElementById('Temperature').value = (document.getElementById('Temperature').value * 1.8)+32;
+						$("#Temperature")[0].value = ($("#Temperature")[0].value * 1.8)+32;
 
 					} else {
 						this.value = '°C';
-						document.getElementById('Temperature').value = (document.getElementById('Temperature').value -32)*(5/9);
+						$("#Temperature")[0].value = ($("#Temperature")[0].value -32)*(5/9);
 					}
 				});
 
@@ -199,7 +199,7 @@
 			<div class="row" id="Capacite">
 				<div class="sous_titre"> * Capacité de la baignoire :</div>
 				<div class="divInput">
-					<input id="capacitebaignoire" type="text" class="inputText" value="<?php echo $_SESSION["capa"];?>"/>
+					<input id="capacitebaignoire" type="text" class="inputText" value="<?php if(isset($_SESSION["capa"])) echo $_SESSION["capa"];?>"/>
 					<input type="button" value="L" disabled="disabled" />
 				</div>
 			</div>
@@ -241,7 +241,7 @@
 			<div class="row">
 				<div class="sous_titre"> * Température : </div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="Temperature" value="<?php echo $_SESSION["temp"];?>"/>
+					<input type="text" class="inputText" id="Temperature" value="<?php if(isset($_SESSION["temp"])) echo $_SESSION["temp"];?>"/>
 					<input type="button" value="°C" class="btn-primary" id="typeTemp"/>
 				</div>
 			</div>
@@ -257,7 +257,7 @@
 			<div class="row">
 				<div class="sous_titre"> ** Quantité d'eau :</div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="QttEau" value="<?php echo $_SESSION["pourcentage"]?>"/>
+					<input type="text" class="inputText" id="QttEau" value="<?php if(isset($_SESSION["pourcentage"])) echo $_SESSION["pourcentage"];?>"/>
 					<input type="button" value="%" class="btn-primary" id="QttEauType"/>
 				</div>
 				<div class="alert alert-danger erreur" id="QttEauErreur">
