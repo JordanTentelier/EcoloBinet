@@ -27,9 +27,12 @@
 
 					if(this.value == '%') {
 						this.value = 'L';
+						document.getElementById('QttEau').value =((document.getElementById('QttEau').value)/100)*document.getElementById('capacitebaignoire').value;
 						$('#QttEauErreur').hide();
 					} else {
 						this.value = '%';
+						document.getElementById('QttEau').value = ((document.getElementById('QttEau').value)/document.getElementById('capacitebaignoire').value)*100;
+
 					}
 
 					if(this.value == '%' && $("#QttEau")[0].value > 100){
@@ -53,11 +56,11 @@
 				$("#typeTemp").on('click', function(){
 					if(this.value == '°C') {
 						this.value = '°F'
-						// TODO
-						// ACTUALISER LA VALEUR DE #Temperature
+						document.getElementById('Temperature').value = (document.getElementById('Temperature').value * 1.8)+32;
+
 					} else {
 						this.value = '°C';
-						// ACTUALISER LA VALEUR DE #Temperature
+						document.getElementById('Temperature').value = (document.getElementById('Temperature').value -32)*(5/9);
 					}
 				});
 
@@ -196,7 +199,7 @@
 			<div class="row" id="Capacite">
 				<div class="sous_titre"> * Capacité de la baignoire :</div>
 				<div class="divInput">
-					<input type="text" class="inputText"/>
+					<input id="capacitebaignoire" type="text" class="inputText" value="<?php echo $_SESSION["capa"];?>"/>
 					<input type="button" value="L" disabled="disabled" />
 				</div>
 			</div>
@@ -238,7 +241,7 @@
 			<div class="row">
 				<div class="sous_titre"> * Température : </div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="Temperature" />
+					<input type="text" class="inputText" id="Temperature" value="<?php echo $_SESSION["temp"];?>"/>
 					<input type="button" value="°C" class="btn-primary" id="typeTemp"/>
 				</div>
 			</div>
@@ -254,7 +257,7 @@
 			<div class="row">
 				<div class="sous_titre"> ** Quantité d'eau :</div>
 				<div class="divInput">
-					<input type="text" class="inputText" id="QttEau"/>
+					<input type="text" class="inputText" id="QttEau" value="<?php echo $_SESSION["pourcentage"]?>"/>
 					<input type="button" value="%" class="btn-primary" id="QttEauType"/>
 				</div>
 				<div class="alert alert-danger erreur" id="QttEauErreur">

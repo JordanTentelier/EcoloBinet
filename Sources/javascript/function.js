@@ -56,7 +56,10 @@ function remplir(capa,temp,quantite){
 		dataType : "json",
 		data : {
 			"action":"remplir",
-			//Ajouter les params.....
+			"login": "<?php $_SESSION['Login'] ?>",
+			"capacite": "<?php $_SESSION['capa'] ?>",
+			"pwd" : "<?php $_SESSION['temp'] ?>",
+			"login": "<?php $_SESSION['pourcentage'] ?>",
 		},
 		type : 'post',
 		success: function(data)
