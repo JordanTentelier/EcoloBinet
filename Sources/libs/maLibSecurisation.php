@@ -40,9 +40,9 @@ if($resource) // si resultat dans la recherche du login
 		$tabData = parcoursRS($resource);
         if($resource)
         {
-            $_SESSION["capa"] = $tabData[0]['capacite'];
-            $_SESSION["temp"] = $tabData[0]['temperature'];
-            $_SESSION["pourcentage"] = $tabData[0]['pourcentage'];
+            isset($tabData[0]['capa']) ? $_SESSION["capa"] = $tabData[0]['capa'] : null;
+            isset($tabData[0]['temp']) ? $_SESSION["temp"] = $tabData[0]['temp'] : null;
+            isset($tabData[0]['pourcentage']) ? $_SESSION["pourcentage"] = $tabData[0]['pourcentage'] : null;
         }
 		return true;
 	}

@@ -55,11 +55,35 @@ session_start();
 				break;
 
 				case "remplir" :
-
                     $temp = valider("temp");
-                    $quantite = valider('quantite');
+                    $quantite = valider("quantite");
+                    $capacite = valider("capacite");
+                    $pourcentage = valider("pourcentage");
+
+                    if(!$pourcentage){
+                    	$pourcentage = intval($capacite/$quantite);
+                    } else {
+                    	$pourcentage = $quantite;
+                    	$quantite = intval(($pourcentage/100)*$capacite);
+                    }
+                    
+                    $id = $_SESSION['IdUser'];
+
+                    $sql = "SELECT id_user FROM parametres WHERE id_user = '$id'";
+                    $resource = SQLSelect($sql);
+
+                    if($resource){
+                    	$sql = "UPDATE parametres SET id_user = '$id', capa = '$capacite', temp = '$temp', pourcentage = '$pourcentage'";
+                    	SQLUpdate($sql);
+                    } else {
+                    	$sql = "INSERT INTO parametres (id_user,capa,temp,pourcentage,eau)  VALUES('$id','$capacite','$temp','$pourcentage')";
+                   	 	SQLInsert($sql);	
+                	}
+
                     $_SESSION["temp"]= $temp;
-                    $_SESSION["quantite"] = $quantite;
+                    $_SESSION["capa"] = $capacite;
+            		$_SESSION["pourcentage"] = $pourcentage;
+           
                     $data["feedback"] = "Remplir OK";
 				break;
 			}

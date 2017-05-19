@@ -21,46 +21,104 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 
-				$(".erreur").hide();
-
 				$("#QttEauType").on('click', function(){
+					$Eau = $("#QttEau")[0].value;
+					$Capacite = $("#capacitebaignoire")[0].value;
 
 					if(this.value == '%') {
 						this.value = 'L';
-
-						$("#QttEau")[0].value =(($("#QttEau")[0].value)/100)*$("#capacitebaignoire")[0].value;
-						$('#QttEauErreur').hide();
+						if(($Eau != "" && $Capacite != "")) {
+							$("#QttEau")[0].value =(($Eau)/100)*$Capacite;
+							unlock("#QttEauErreur","#QttEauType");
+						}
 					} else {
 						this.value = '%';
-						$("#QttEau")[0].value = (($("#QttEau")[0].value)/$("#capacitebaignoire")[0].value)*100;
+						if(($("#QttEau")[0].value != "" && $Capacite != "")) {
+							$("#QttEau")[0].value = ($Eau)/$Capacite;
+						}
 					}
 
-					if(this.value == '%' && $("#QttEau")[0].value > 100){
-						$('#QttEauErreur').show();
+					if(this.value == '%' && $Eau > 100){
+						lock("veuillez entrer un nombre inférieur à 100","#QttEauErreur","#QttEauType");
 					}
 				})
 
-				$("#QttEau").keyup(function() {
+				$("#capacitebaignoire").keyup(function(){
 					if(isNaN(this.value)){
-						var Eau = this.value;
-						Eau = Eau.substring(0,Eau.length-1);
-						this.value = Eau;
-					}
-					if(this.value > 100 && $("#QttEauType")[0].value == '%'){
-						$('#QttEauErreur').show();
+						lock("veuillez entrer un nombre","#capaciteErreur");
 					} else {
-						$('#QttEauErreur').hide();
+						unlock("#capaciteErreur");
+						if($("#QttEau")[0].value != ""){
+							if(this.value < parseInt($("#QttEau")[0].value )) {
+								lock("La capacite de votre baignoire est inférieur à la quantité d'eau souhaitée","#capaciteErreur");
+							} else {
+								unlock("#QttEauErreur","#QttEauType");
+							}
+						} 
+					} 
+					
+				})
+
+				$("#QttEau").keyup(function() {
+
+					if($("#QttEauType")[0].value == "%"){
+						
+						if(this.value > 100 && $("#QttEauType")[0].value == '%'){
+							lock("veuillez entrer un nombre inférieur à 100","#QttEauErreur","#QttEauType");
+						} else {
+							unlock("#QttEauErreur","#QttEauType");
+						}
+					} else{
+					
+						if($("#capacitebaignoire")[0].value != ""){
+							if(parseInt($("#capacitebaignoire")[0].value) < this.value){
+								lock("veuillez entrer un nombre inférieur à la capacité de votre baignoire","#QttEauErreur","#QttEauType");
+							} else {
+								unlock("#QttEauErreur","#QttEauType");
+								unlock("#capaciteErreur");
+							}
+						}
 					}
+					
+				});
+
+				$("#Temperature").keyup(function() {
+
+					if($("#typeTemp")[0].value == '°C'){
+						$temp = 37;
+						$type = '°C';
+					} else {
+						$temp = 98.6;
+						$type= '°F';
+					}
+
+					if(isNaN(this.value)) {
+						lock("veuillez entrer un nombre","#TempErreur","#typeTemp");
+					} else {
+						unlock("#TempErreur","#typeTemp");
+
+						if(this.value > $temp) {
+							lock("veuillez entrer une température inférieur à "+$temp+$type,"#TempErreur","#typeTemp");
+						} else {
+							unlock("#TempErreur","#typeTemp");
+						}
+					}
+		
 				});
 
 				$("#typeTemp").on('click', function(){
-					if(this.value == '°C') {
-						this.value = '°F'
-						$("#Temperature")[0].value = ($("#Temperature")[0].value * 1.8)+32;
+					$temperature = $("#Temperature")[0].value;
 
+					if(this.value == '°C') {
+						this.value = '°F';
+						if($temperature != "" && $temperature <= 37){
+							$("#Temperature")[0].value = Math.round((($temperature * 1.8)+32)*100)/100;
+						}
 					} else {
 						this.value = '°C';
-						$("#Temperature")[0].value = ($("#Temperature")[0].value -32)*(5/9);
+						if($temperature != "" && $temperature <= 98.6){
+							$("#Temperature")[0].value = Math.round(($temperature -32)*(5/9)*100)/100;
+						}
 					}
 				});
 
@@ -69,13 +127,13 @@
 					{
 						$('#Capacite').hide();
 						$('#Surface').show();
-						this.value = 'Capacite'
-					}
+						this.value = 'Capacite';
+					} 
 					else
 					{
 						$('#Surface').hide();
 						$('#Capacite').show();
-						this.value = 'Surface'
+						this.value = 'Surface';
 					}
 				});
 
@@ -84,27 +142,7 @@
 				});
 
 				$("#Remplissage").on('click', function(){
-					var temp = $("#Temperature")[0].value;
-					var qtteau = $("#QttEau")[0].value;
-					var capa = $("#capacitebaignoire")[0].value
-
-					if(isNaN(temp)!=false && isNaN(qtteau)!=false && isNaN(capa)!=false) {
-						if ($("#QttEauType")[0].value == '%') {
-							if (qtteau > 100)
-								return;
-							if ($("#typeTemp")[0].value == '°C')
-								remplir(temp, (qtteau / 100) * capa);
-							else
-								remplir((temp - 32) * (5 / 9), (qtteau / 100) * capa);
-						} else {
-							if ($("#QttEau")[0].value > capa)
-								return;
-							if ($("#typeTemp")[0].value == '°C')
-								remplir(temp, qtteau);
-							else
-								remplir((temp - 32) * (5 / 9), qtteau);
-						}
-					}
+					verifierCondition();
 				});
 
 			});
@@ -113,6 +151,15 @@
 
 		<!-- CSS -->
 		<style type="text/css">
+		    .container {
+                background-color: white;
+                border-radius: 10px;
+            }
+
+            body {
+                background-image: url(img/wallpaper);
+            }
+
 			.sous_titre {
 				font-size : 16px;
 				margin-left: 50px;
@@ -215,17 +262,18 @@
 
 
 			<h4> Paramètres : </h4>
-			<input class="btn btn-primary" id="ButtonSurfCapa" type="button" value="Surface">
 			<div class="row" id="Capacite">
 				<div class="sous_titre"> * Capacité de la baignoire :</div>
 				<div class="divInput">
 					<input id="capacitebaignoire" type="text" class="inputText" value="<?php if(isset($_SESSION["capa"])) echo $_SESSION["capa"];?>"/>
 					<input type="button" value="L" disabled="disabled" />
 				</div>
+				<div class="alert alert-danger erreur" id="capaciteErreur" style="display:none">
+				</div>
 			</div>
 
 			<div class="row" id="Surface" style="display:none;">
-			<div class="sous_titre"> Surface : </div>
+				<div class="sous_titre"> Surface : </div>
 				<div id="divSousSousTitre" style="margin-left: 50px">
 
 					<div class="row">
@@ -254,6 +302,10 @@
 				</div>
 			</div>
 
+			<div class="row" style="margin-top:10px;">
+				<input class="btn btn-primary bigButton" id="ButtonSurfCapa" type="button" value="Surface"/>
+			</div>
+
 
 			<h4> Bain : </h4>
 
@@ -263,6 +315,8 @@
 				<div class="divInput">
 					<input type="text" class="inputText" id="Temperature" value="<?php if(isset($_SESSION["temp"])) echo $_SESSION["temp"];?>"/>
 					<input type="button" value="°C" class="btn-primary" id="typeTemp"/>
+				</div>
+				<div class="alert alert-danger erreur" id="TempErreur" style="display:none">
 				</div>
 			</div>
 
@@ -280,14 +334,17 @@
 					<input type="text" class="inputText" id="QttEau" value="<?php if(isset($_SESSION["pourcentage"])) echo $_SESSION["pourcentage"];?>"/>
 					<input type="button" value="%" class="btn-primary" id="QttEauType"/>
 				</div>
-				<div class="alert alert-danger erreur" id="QttEauErreur">
-  					<strong>Erreur :</strong> veuillez entrer un nombre inférieur à 100
+				<div class="alert alert-danger erreur" id="QttEauErreur" style="display:none">
+  					
 				</div>
 			</div>
 
 			<div class="row" style="margin-top: 25px;">
 				<input type="button" value="Remplissage" class="btn btn-primary bigButton" id="Remplissage"/>
 				<input type="button" value="Nettoyage" class="btn btn-primary bigButton" id="Nettoyage"/>
+			</div>
+
+			<div class="alert alert-danger erreur" id="Erreur" style="display:none">
 			</div>
 
 			<div class="row" style="margin-top:25px;">

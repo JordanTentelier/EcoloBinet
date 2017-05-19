@@ -2,7 +2,6 @@
     session_start();
     if(!isset($_SESSION["connecte"]))
         header('Location:Homepage.php');
-    var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -17,11 +16,18 @@
         <script src="javascript/jquery-ui"></script>
         <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
         <script type="text/javascript" src="bootstrap/js/bootstrap"></script>
+        <script src="/bower_components/jquery.countdown/dist/jquery.countdown.js"></script>
+
+
         <script type="text/javascript">
             $(document).ready(function(){
 
+                $('#clock').countdown('2020/10/10', function(event) {
+  $(this).html(event.strftime('%D days %H:%M:%S'));
+});
+
+
                 $("#annuler").on('click',function(){
-                    console.log($("#annuler"));
                     if($("#annuler")[0].value == 'Annuler') {
                         $("#annuler")[0].value = 'Reprendre';
                         compteur2 = compteur;
@@ -55,7 +61,20 @@
         </script>
 
         <!-- CSS -->
-        <style type="text/css">
+        <style type="text/css">*
+            .inputText {
+                text-align: center;
+            }
+
+            .container {
+                background-color: white;
+                border-radius: 10px;
+            }
+
+            body {
+                background-image: url(img/wallpaper);
+            }
+
             .sous_titre {
                 font-size : 16px;
                 margin-left: 50px;
@@ -159,7 +178,7 @@
 
                 <div class="row">
                     <div class="sous_titre">Temps restant :</div>
-                    <input type="text" class="inputText" disabled="disabled">
+                   <span id="clock"></span>
                 </div>
 
                 <div class="row">

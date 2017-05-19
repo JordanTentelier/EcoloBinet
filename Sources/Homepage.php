@@ -66,6 +66,29 @@
 		</script>
 
 		<style type="text/css">
+		    .container {
+                background-color: white;
+                border-radius: 10px;
+            }
+
+            .center-div
+{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+            body {
+                background-image: url(img/wallpaper);
+            }
+
 			.row {
 				margin-top: 5px;
 			}
@@ -131,6 +154,7 @@
 	<body>
 
 		<div class="container" style="width:500px;border: 1px solid black;padding-bottom: 10px">
+
 			<div class="col-md-12" style="text-align:center;margin-bottom:20px;">
 				<img src="img/logo.png" style="height:200px;width:300px;margin:auto"/>
 			</div>
