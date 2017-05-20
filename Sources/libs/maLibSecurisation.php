@@ -30,7 +30,7 @@ $tabData = parcoursRS($resource); // tabData , tableau des r�ponses de resourc
 if($resource) // si resultat dans la recherche du login
 	{
 		$_SESSION["Login"]= $login; // La session ouverte prend pour pseudo le login
-		$_SESSION["Password"] = $pwd;
+		//$_SESSION["Password"] = $pwd;
 		$_SESSION["IdUser"] = $tabData[0]['Id'];
 		$id = $_SESSION["IdUser"];
 		$_SESSION["connecte"] = true;

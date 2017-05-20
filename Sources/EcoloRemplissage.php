@@ -16,39 +16,48 @@
         <script src="javascript/jquery-ui"></script>
         <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
         <script type="text/javascript" src="bootstrap/js/bootstrap"></script>
-        <script src="/bower_components/jquery.countdown/dist/jquery.countdown.js"></script>
-
+        <script type="text/javascript" src="jquery.countdown-2.2.0/jquery.countdown.js"></script>
+        <script type="text/javascript" src="javascript/function.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function(){
+                $time = parseInt("<?php echo $_SESSION['time'] ?>");
+                $compteur = parseInt("<?php echo $_SESSION['compteur'] ?>");
+                $fin = "<?php echo $_SESSION['fin']; ?>";
+                $flag = 0;
 
-                $('#clock').countdown('2020/10/10', function(event) {
-  $(this).html(event.strftime('%D days %H:%M:%S'));
-});
+                $(document.body).on("keydown", this, function (event) {
+                    if (event.keyCode == 116) {
+                        updateSession($time,$compteur);
+                    }
+                });
 
+
+                $("#getting-started").countdown($fin, function(event) {
+                    console.log("<?php echo $_SESSION['fin']; ?>");
+                    $tempRestant = event.strftime('%H:%M:%S');
+                    console.log($tempRestant);
+                    $(this).text($tempRestant);
+                });
 
                 $("#annuler").on('click',function(){
                     if($("#annuler")[0].value == 'Annuler') {
                         $("#annuler")[0].value = 'Reprendre';
-                        compteur2 = compteur;
-                        compteur = time;
+                        $flag = 1;
+                        $('#getting-started').countdown('stop');
                     } else {
                         $("#annuler")[0].value = 'Annuler';
-                        compteur = compteur2;
+                        updateCountDown();
                     }
                     
                 });
 
-                var time = 10;
-                var compteur = 0;
-                var compteur2 = 0;
-
                 setInterval(function() {ProgressBar()},1000);
 
                 function ProgressBar(){
-                    if(compteur != time) {
-                        compteur = compteur + 1;
-                        var pourcentage = parseInt(compteur/time*100);
+                    if($compteur < $time && $flag == 0) {
+                        $compteur = $compteur + 1;
+                        var pourcentage = parseInt($compteur/$time*100);
 
                         $("#progressbar").html(pourcentage+"%");
                         $("#progressbar").width(pourcentage+"%"); 
@@ -61,8 +70,11 @@
         </script>
 
         <!-- CSS -->
-        <style type="text/css">*
-            .inputText {
+        <style type="text/css">
+            #getting-started {
+                width:150px;
+            }
+            .inputText, #getting-started {
                 text-align: center;
             }
 
@@ -134,7 +146,7 @@
                     text-align: center;
                 }
 
-                .inputText {
+                .inputText , #getting-started{
                     width:90%;
                     margin:auto !important;
                     display: block !important;
@@ -178,7 +190,7 @@
 
                 <div class="row">
                     <div class="sous_titre">Temps restant :</div>
-                   <span id="clock"></span>
+                    <div id="getting-started"> </div>
                 </div>
 
                 <div class="row">

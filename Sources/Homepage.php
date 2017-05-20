@@ -10,6 +10,12 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 
+				$(document).keypress(function(e) {
+				    if(e.which == 13) {
+				        $("#connexion").trigger('click');
+				    }
+				});
+
 				$("#type").on('click', function(){
 
 					if(this.value == '%') {

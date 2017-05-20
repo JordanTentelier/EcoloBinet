@@ -29,6 +29,7 @@ session_start();
 		}
 
 		else {
+			date_default_timezone_set('Europe/Paris');
 			switch($data["action"]){
 				case "connexion" :
 					$login = valider("login");
@@ -83,8 +84,20 @@ session_start();
                     $_SESSION["temp"]= $temp;
                     $_SESSION["capa"] = $capacite;
             		$_SESSION["pourcentage"] = $pourcentage;
-           
+
+            		// TODO : calculer le debit de la valve && en deduire le temps de replissage
+            		$_SESSION["time"] = 600;
+            		$_SESSION["compteur"] = 0;
+            		$_SESSION["fin"] = date('Y/m/d H:i:s',strtotime("+".$_SESSION["time"]." seconds"));
                     $data["feedback"] = "Remplir OK";
+				break;
+
+				case "updateSession" : 
+					$compteur = valider("compteur");
+					$time = valider("time");
+					$_SESSION["time"] = $time;
+            		$_SESSION["compteur"] = $compteur;
+            		$_SESSION["fin"] = date('Y/m/d H:i:s',strtotime("+".$time-$compteur." seconds"));
 				break;
 			}
 		}

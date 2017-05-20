@@ -98,8 +98,14 @@ function verifierCondition(){
 	var qtteau 		= $("#QttEau")[0].value;
 	var capa 		= $("#capacitebaignoire")[0].value;
 	var Typeqtt 	= $("#QttEauType")[0].value;
-
+	var largeur		= $("#largeur")[0].value;
+	var longueur	= $("#longueur")[0].value;
+	var hauteur		= $("#hauteur")[0].value;
 	var verifQttEau = qtteau;
+
+	if(capa == ""){
+		capa = (longueur*largeur*hauteur)/1000;
+	}
 
 	if(Typeqtt == "%"){
 		verifQttEau = parseInt(qtteau/100*capa);
@@ -132,4 +138,40 @@ function verifierCondition(){
 		lock("Température / Quantite d'eau / Capacité : veuillez entrer un nombre","#Erreur");
 	}
 
+}
+
+function updateCountDown (){
+	$flag = 0;
+    var today = new Date();
+    today = today.getTime();
+    today += ($time-$compteur)*1000;
+    today = new Date(today);
+    var day = today.getDate();
+    var month = today.getMonth()+1; 
+    var year = today.getFullYear();
+    var hour = today.getHours();
+    var minutes = today.getMinutes();
+    var secondes = today.getSeconds();
+
+    if(day<10){
+        day='0'+day;
+    } 
+    if(month<10){
+        month='0'+month;
+    } 
+    today = year+'/'+month+'/'+day+' '+hour+':'+minutes+':'+secondes;
+    $('#getting-started').countdown(today);
+}
+
+function updateSession(time,compteur) {
+	$.ajax({
+		url : 'data.php',
+		dataType : "json",
+		data : {
+			"action"		:"updateSession",
+			"time"			:time,
+			"compteur"		:compteur,
+		},
+		type : 'post',
+	});
 }

@@ -34,7 +34,8 @@
 					} else {
 						this.value = '%';
 						if(($("#QttEau")[0].value != "" && $Capacite != "")) {
-							$("#QttEau")[0].value = ($Eau)/$Capacite;
+							$Eau = (($Eau)/$Capacite)*100;
+							$("#QttEau")[0].value = $Eau;
 						}
 					}
 
@@ -48,7 +49,7 @@
 						lock("veuillez entrer un nombre","#capaciteErreur");
 					} else {
 						unlock("#capaciteErreur");
-						if($("#QttEau")[0].value != ""){
+						if($("#QttEau")[0].value != "" && this.value != ""){
 							if(this.value < parseInt($("#QttEau")[0].value )) {
 								lock("La capacite de votre baignoire est inférieur à la quantité d'eau souhaitée","#capaciteErreur");
 							} else {
@@ -81,6 +82,15 @@
 					}
 					
 				});
+
+				$(".surface").keyup(function() {
+					if(isNaN(this.value)) {
+						lock("veuillez entrer un nombre","#"+this.name);
+					} else {
+						unlock("#"+this.name);
+					}
+				});
+
 
 				$("#Temperature").keyup(function() {
 
@@ -127,7 +137,7 @@
 					{
 						$('#Capacite').hide();
 						$('#Surface').show();
-						this.value = 'Capacite';
+						this.value = 'Capacité';
 					} 
 					else
 					{
@@ -164,13 +174,6 @@
 				font-size : 16px;
 				margin-left: 50px;
 				width: 200px;
-			}
-
-			.sous_sous_titre {
-				font-size : 16px;
-				margin-left: 50px;
-				margin-right: 15px;
-				width: 150px;
 			}
 
 			.row {
@@ -228,12 +231,6 @@
 
 				}
 
-				.sous_sous_titre {
-					margin :0px;
-					width:100%;
-					text-align:center;
-				}
-
 				.bigButton {
 					width:90%;
 					margin-bottom: 5px;
@@ -242,11 +239,6 @@
 				.divInput {
 					width:100%;
 					text-align:center;
-				}
-
-				#divSousSousTitre {
-					width:80%;
-					margin:auto !important;
 				}
 
 			}
@@ -272,34 +264,38 @@
 				</div>
 			</div>
 
-			<div class="row" id="Surface" style="display:none;">
-				<div class="sous_titre"> Surface : </div>
-				<div id="divSousSousTitre" style="margin-left: 50px">
-
+			<div id="Surface" style="display:none;">
+			
 					<div class="row">
-						<div class="sous_sous_titre"> * Longueur intérieur : </div>
+						<div class="sous_titre"> * Longueur intérieur : </div>
 						<div class="divInput">
-							<input type="text" class="inputText" />
+							<input type="text" class="inputText surface" id="longueur" name="longueurErreur"/>
 							<input type="button" value="cm" disabled="disabled" />
+						</div>
+						<div class="alert alert-danger erreur" id="longueurErreur" style="display:none">
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="sous_sous_titre"> * Largeur intérieur : </div>
+						<div class="sous_titre"> * Largeur intérieur : </div>
 						<div class="divInput">
-							<input type="text" class="inputText"/>
+							<input type="text" class="inputText surface" id="largeur" name="largeurErreur"/>
 							<input type="button" value="cm" disabled="disabled" />
+						</div>
+						<div class="alert alert-danger erreur" id="largeurErreur" style="display:none">
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="sous_sous_titre"> * Hauteur intérieur : </div>
+						<div class="sous_titre"> * Hauteur intérieur : </div>
 						<div class="divInput">
-							<input type="text" class="inputText"/>
+							<input type="text" class="inputText surface" id="hauteur" name="hauteurErreur"/>
 							<input type="button" value="cm" disabled="disabled" />
 						</div>
+						<div class="alert alert-danger erreur" id="hauteurErreur" style="display:none">
+						</div>
 					</div>
-				</div>
+		
 			</div>
 
 			<div class="row" style="margin-top:10px;">
@@ -335,7 +331,6 @@
 					<input type="button" value="%" class="btn-primary" id="QttEauType"/>
 				</div>
 				<div class="alert alert-danger erreur" id="QttEauErreur" style="display:none">
-  					
 				</div>
 			</div>
 
