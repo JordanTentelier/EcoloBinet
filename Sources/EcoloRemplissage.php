@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <script type="text/javascript" src="javascript/tether-1.3.3/dist/js/tether.js"></script>
         <script type="text/javascript" src="javascript/jquery-3.2.1.js"></script>
-        <script src="javascript/jquery-ui"></script>
+        <script src="javascript/jquery-ui.js"></script>
         <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
         <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
         <script type="text/javascript" src="jquery.countdown-2.2.0/jquery.countdown.js"></script>
