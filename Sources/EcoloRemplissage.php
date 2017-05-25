@@ -9,13 +9,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap">
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui">
-        <script type="text/javascript" src="javascript/tether-1.3.3/dist/js/tether"></script>
-        <script type="text/javascript" src="javascript/jquery-3.2.1"></script>
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <script type="text/javascript" src="javascript/tether-1.3.3/dist/js/tether.js"></script>
+        <script type="text/javascript" src="javascript/jquery-3.2.1.js"></script>
         <script src="javascript/jquery-ui"></script>
         <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
-        <script type="text/javascript" src="bootstrap/js/bootstrap"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
         <script type="text/javascript" src="jquery.countdown-2.2.0/jquery.countdown.js"></script>
         <script type="text/javascript" src="javascript/function.js"></script>
 

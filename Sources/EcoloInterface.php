@@ -12,10 +12,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap">
-		<script type="text/javascript" src="javascript/tether-1.3.3/dist/js/tether"></script>
-		<script type="text/javascript" src="javascript/jquery-3.2.1"></script>
-		<script type="text/javascript" src="bootstrap/js/bootstrap"></script>
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+		<script type="text/javascript" src="javascript/tether-1.3.3/dist/js/tether.js"></script>
+		<script type="text/javascript" src="javascript/jquery-3.2.1.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 		<script type="text/javascript" src="javascript/function.js"></script>
 
 		<script type="text/javascript">
@@ -167,7 +167,7 @@
             }
 
             body {
-                background-image: url(img/wallpaper);
+                background-image: url(img/wallpaper.jpg);
             }
 
 			.sous_titre {
