@@ -92,7 +92,7 @@
 }
 
             body {
-                background-image: url(img/wallpaper);
+                background-image: url(img/wallpaper.jpg);
             }
 
 			.row {
