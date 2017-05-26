@@ -2,9 +2,12 @@
     session_start();
     if(!isset($_SESSION["connecte"]))
         header('Location:Homepage.php');
-     //$output = shell_exec('sudo python Electrovanneup.py 2>&1');
-     //echo $output;
-	var_dump($_SESSION);
+     var_dump($_SESSION);
+	function updateFlow()
+	{
+		$flow = shell_exec('sudo python waterFlowSensor.py');
+		echo $flow;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -24,50 +27,68 @@
 
         <script type="text/javascript">
             $(document).ready(function(){
-                $time = parseInt("<?php echo $_SESSION['time'] ?>");
+		$time=-1;
                 $compteur = parseInt("<?php echo $_SESSION['compteur'] ?>");
                 $fin = "<?php echo $_SESSION['fin']; ?>";
-                $flag = 0;
+		$flow = <?php echo $_SESSION['flow']; ?>;
+		$litreEcoule = <?php echo $_SESSION['litreEcoule']; ?>;
+		$litreDemande= <?php echo $_SESSION['litreDemande']; ?>;
+		$flag = 0;
 
-                $(document.body).on("keydown", this, function (event) {
-			if (event.keyCode == 116) {
-                        	updateSession($time,$compteur);
-                    	}
-                });
-
+		$(window).bind('beforeunload',function(){
+			updateSession($time,$compteur,$litreEcoule);
+		});
 
                 $("#getting-started").countdown($fin, function(event) {
-                    console.log("<?php echo $_SESSION['fin']; ?>");
                     $tempRestant = event.strftime('%H:%M:%S');
-                    console.log($tempRestant);
-                    $(this).text($tempRestant);
-                });
+                    $(this).text($tempRestant);				 		
+		if($time==-1)
+                {
+		$splittime = $tempRestant.split(':');		     
+		$time = parseInt($splittime[1])*60+parseInt($splittime[2]);
+			console.log($time);
+		}		
+		});
 
                 $("#annuler").on('click',function(){
                     if($("#annuler")[0].value == 'Annuler') {
                         $("#annuler")[0].value = 'Reprendre';
                         $flag = 1;
                         $('#getting-started').countdown('stop');
+			electrovanne(false);
                     } else {
                         $("#annuler")[0].value = 'Annuler';
-                        updateCountDown();
+			if($litreEcoule!=$litreDemande)
+				electrovanne(true);                   
+			 updateCountDown();
                     }
                     
                 });
 
-                setInterval(function() {ProgressBar()},1000);
-
-                function ProgressBar(){
-                    if($compteur < $time && $flag == 0) {
-                        $compteur = $compteur + 1;
-                        var pourcentage = parseInt($compteur/$time*100);
-
-                        $("#progressbar").html(pourcentage+"%");
+		setInterval(function() {ProgressBar()},1000);
+                
+		function ProgressBar(){		
+                    if($flag == 0) {
+				$litreEcoule = $litreEcoule+$flow;
+			var pourcentage = parseInt(($litreEcoule / $litreDemande)*100);
+			if(pourcentage<100)
+		        {
+				//var pourcentage = parseInt($compteur/$time*100);
+				$("#eauUtilise").val($litreEcoule.toFixed(2));
+			}
+			else
+		    	{
+				electrovanne(false);
+				$litreEcoule = $litreDemande;	
+				$("#eauUtilise").val($litreDemande);
+				pourcentage=100;			
+			}
+                    	
+			$("#progressbar").html(pourcentage+"%");
                         $("#progressbar").width(pourcentage+"%"); 
                     }
-                                   
-                }
-
+		}
+				
             });
 
         </script>
@@ -187,7 +208,7 @@
                
                     <div class="block" style="display:inline-block;width:50%;">
                         <div class="sous_titre" style="display:inline-block">Litre(s) d'eau utilisé(s) :</div>
-                        <input type="text" class="inputText" disabled="disabled" style="display:inline-block;margin-left:-3px;"/>
+                        <input id="eauUtilise"type="text" class="inputText" disabled="disabled" style="display:inline-block;margin-left:-3px;"/>
                     </div>
                 </div>
 

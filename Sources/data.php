@@ -54,7 +54,13 @@ session_start();
 					session_destroy();
 					$data["feedback"] = "Deconnection";
 				break;
-
+				case "electrovanne" :
+					$flag = valider("flag");
+					if($flag =="true")
+						shell_exec('sudo python Electrovanneup.py');
+					else
+						shell_exec('sudo python Electrovannedown.py');
+				break;
 				case "remplir" :
                     $temp = valider("temp");
                     $quantite = valider("quantite");
@@ -86,8 +92,14 @@ session_start();
             		$_SESSION["pourcentage"] = $pourcentage;
 
             		// TODO : calculer le debit de la valve && en deduire le temps de replissage
-            		$_SESSION["time"] = 600;
-            		$_SESSION["compteur"] = 0;
+			shell_exec('sudo python Electrovanneup.py');
+			sleep(1);			
+			$flow = shell_exec('sudo python waterFlowSensor.py');
+			$_SESSION["flow"] = $flow;
+			$_SESSION["litreDemande"] = $capacite*($pourcentage/100);
+			$_SESSION["litreEcoule"] = 3 * $_SESSION["flow"];
+            		$_SESSION["time"] = intval(($capacite*($pourcentage/100))/$flow) ;
+			$_SESSION["compteur"] = 0;
             		$_SESSION["fin"] = date('Y/m/d H:i:s',strtotime("+".$_SESSION["time"]." seconds"));
                     $data["feedback"] = "Remplir OK";
 				break;
@@ -95,7 +107,9 @@ session_start();
 				case "updateSession" : 
 					$compteur = valider("compteur");
 					$time = valider("time");
+					$litreEcoule = valider("litreEcoule");
 					$_SESSION["time"] = $time;
+					$_SESSION["litreEcoule"] = $litreEcoule;
             		$_SESSION["compteur"] = $compteur;
             		$_SESSION["fin"] = date('Y/m/d H:i:s',strtotime("+".$time-$compteur." seconds"));
 				break;

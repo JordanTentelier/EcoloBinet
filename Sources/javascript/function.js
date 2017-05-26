@@ -23,6 +23,22 @@ function connexion(login,pwd){
 				
 			},
 		});
+};	
+
+function electrovanne(flag){
+	$.ajax({
+			url : 'data.php',
+			dataType : "json",
+			data : {
+					"action":"electrovanne",
+					"flag": flag,
+					},
+			type : 'post',
+			success: function(data)
+			{},
+			error:function(data)
+			{},
+		});
 };		
 
 function deconnexion(){
@@ -163,7 +179,7 @@ function updateCountDown (){
     $('#getting-started').countdown(today);
 }
 
-function updateSession(time,compteur) {
+function updateSession(time,compteur,litreEcoule) {
 	$.ajax({
 		url : 'data.php',
 		dataType : "json",
@@ -171,7 +187,9 @@ function updateSession(time,compteur) {
 			"action"		:"updateSession",
 			"time"			:time,
 			"compteur"		:compteur,
+			"litreEcoule"		:litreEcoule,
 		},
 		type : 'post',
+		async : false,
 	});
 }
