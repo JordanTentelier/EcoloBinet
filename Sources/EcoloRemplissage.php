@@ -2,6 +2,9 @@
     session_start();
     if(!isset($_SESSION["connecte"]))
         header('Location:Homepage.php');
+     //$output = shell_exec('sudo python Electrovanneup.py 2>&1');
+     //echo $output;
+	var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -27,9 +30,9 @@
                 $flag = 0;
 
                 $(document.body).on("keydown", this, function (event) {
-                    if (event.keyCode == 116) {
-                        updateSession($time,$compteur);
-                    }
+			if (event.keyCode == 116) {
+                        	updateSession($time,$compteur);
+                    	}
                 });
 
 
